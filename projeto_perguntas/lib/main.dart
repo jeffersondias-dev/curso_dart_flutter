@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_perguntas/questao.dart';
+import 'package:projeto_perguntas/respostas.dart';
 
 main() {
   runApp(PerguntaApp());
@@ -22,9 +23,26 @@ class _PerguntaAppState extends State<PerguntaApp> {
   @override
   Widget build(BuildContext context) {
     final perguntas = [
-      "Qual é a sua cor Favorita?",
-      "Qual é o seu animal Favorito?",
+      {
+        'texto': 'Qual é a sua cor Favorita?',
+        'respostas': ['Preto', 'Vermelho', 'Verde', 'Branco'],
+      },
+      {
+        'texto': 'Qual é o seu animal Favorito?',
+        'respostas': ['Coelho', 'Gato', 'Cachorro', 'Cavalo'],
+      },
+      {
+        'texto': 'Qual é o seu instrutor Favorito?',
+        'respostas': ['João', 'Maria', 'Diogo', 'Dayana'],
+      }
     ];
+
+    List<Widget> respostas = [];
+
+    for (String textoResposta
+        in perguntas[_perguntaSelecionada].cast()['respostas']) {
+      respostas.add(Resposta(textoResposta, _responder));
+    }
 
     return MaterialApp(
       home: Scaffold(
@@ -33,19 +51,8 @@ class _PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column(
           children: [
-            Questao(perguntas[_perguntaSelecionada]),
-            ElevatedButton(
-              onPressed: _responder,
-              child: const Text('Resposta 1'),
-            ),
-            ElevatedButton(
-              onPressed: _responder,
-              child: const Text('Resposta 2'),
-            ),
-            ElevatedButton(
-              onPressed: _responder,
-              child: const Text('Resposta 3'),
-            ),
+            Questao(perguntas[_perguntaSelecionada]['texto'].toString()),
+            ...respostas,
           ],
         ),
       ),
