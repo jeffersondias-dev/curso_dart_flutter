@@ -1,3 +1,7 @@
+/// Resposta is a StatelessWidget that takes a String and a Function as parameters.
+/// The String is the text that will be displayed on the button.
+///
+/// The Function is the function that will be called when the button is pressed.
 import 'package:flutter/material.dart';
 
 class Resposta extends StatelessWidget {

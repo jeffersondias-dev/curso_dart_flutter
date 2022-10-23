@@ -1,3 +1,4 @@
+/// The class Questao is a StatelessWidget that has a property called texto, which is a String
 import 'package:flutter/material.dart';
 
 class Questao extends StatelessWidget {
