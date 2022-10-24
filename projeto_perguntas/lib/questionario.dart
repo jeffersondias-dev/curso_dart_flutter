@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:projeto_perguntas/questao.dart';
 import 'package:projeto_perguntas/respostas.dart';
 
+/// A stateless widget that receives a list of questions and answers, and displays them on the
+/// screen.
 class Questionario extends StatelessWidget {
   final List<Map<String, Object>> perguntas;
   final int perguntaSelecionada;
@@ -19,14 +21,18 @@ class Questionario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> respostas = temPerguntaSelecionada
-        ? perguntas[perguntaSelecionada].cast()['respostas']
+    List<Map<String, Object>> respostas = temPerguntaSelecionada
+        ? perguntas[perguntaSelecionada]['respostas']
+            as List<Map<String, Object>>
         : perguntas[0].cast()['respostas'];
 
     return Column(
       children: [
+        /// A list of widgets.
         Questao(perguntas[perguntaSelecionada]['texto'].toString()),
-        ...respostas.map((element) => Resposta(element, responder)).toList(),
+        ...respostas
+            .map((element) => Resposta(element['texto'] as String, responder))
+            .toList(),
       ],
     );
   }
