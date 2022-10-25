@@ -16,33 +16,34 @@ class _PerguntaAppState extends State<PerguntaApp> {
     {
       'texto': 'Qual é a sua cor Favorita?',
       'respostas': [
-        {'texto': 'Preto', 'nota': 10},
-        {'texto': 'Vermelho', 'nota': 5},
-        {'texto': 'Verde', 'nota': 3},
-        {'texto': 'Branco', 'nota': 2},
+        {'texto': 'Preto', 'pontuacao': 10},
+        {'texto': 'Vermelho', 'pontuacao': 5},
+        {'texto': 'Verde', 'pontuacao': 3},
+        {'texto': 'Branco', 'pontuacao': 2},
       ],
     },
     {
       'texto': 'Qual é o seu animal Favorito?',
       'respostas': [
-        {'texto': 'Coelho', 'nota': 8},
-        {'texto': 'Gato', 'nota': 3},
-        {'texto': 'Cachorro', 'nota': 6},
-        {'texto': 'Cavalo', 'nota': 1},
+        {'texto': 'Coelho', 'pontuacao': 8},
+        {'texto': 'Gato', 'pontuacao': 3},
+        {'texto': 'Cachorro', 'pontuacao': 6},
+        {'texto': 'Cavalo', 'pontuacao': 1},
       ],
     },
     {
       'texto': 'Qual é o seu instrutor Favorito?',
       'respostas': [
-        {'texto': 'João', 'nota': 9},
-        {'texto': 'Maria', 'nota': 3},
-        {'texto': 'Diogo', 'nota': 6},
-        {'texto': 'Dayana', 'nota': 10},
+        {'texto': 'João', 'pontuacao': 9},
+        {'texto': 'Maria', 'pontuacao': 3},
+        {'texto': 'Diogo', 'pontuacao': 6},
+        {'texto': 'Dayana', 'pontuacao': 10},
       ],
     }
   ];
 
   var _perguntaSelecionada = 0;
+  var _pontuacaoTotal = 0;
 
   bool get temPerguntaSelecionada {
     return _perguntaSelecionada < _perguntas.length;
@@ -50,12 +51,20 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
   /// _responder() is a function that is called when the user clicks on the button. It checks if there is
   /// a question selected, and if there is, it increments the _perguntaSelecionada variable by 1
-  void _responder() {
+  void _responder(int pontuacao) {
     if (temPerguntaSelecionada) {
       setState(() {
         _perguntaSelecionada++;
+        _pontuacaoTotal += pontuacao;
       });
     }
+  }
+
+  void _reiniciarQuestionario() {
+    setState(() {
+      _perguntaSelecionada = 0;
+      _pontuacaoTotal = 0;
+    });
   }
 
   /// A getter that returns true if the _perguntaSelecionada is less than the length of the _perguntas
@@ -73,7 +82,9 @@ class _PerguntaAppState extends State<PerguntaApp> {
                 perguntas: _perguntas,
                 perguntaSelecionada: _perguntaSelecionada,
                 responder: _responder)
-            : const Resultado('Parabéns Jovem'),
+            : Resultado(
+                pontuacao: _pontuacaoTotal,
+                reinciarQuestionario: _reiniciarQuestionario),
       ),
     );
   }
